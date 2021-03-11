@@ -24,6 +24,7 @@ print (status)
 
 # CHANGE THIS to the data that you want your 
 # machine learning model to classify
+'''
 data1 = "PLAYER"
 data2 = "PLAYER"
 data3 = "EMPTY"
@@ -43,7 +44,7 @@ test_data = [ data1, data2, data3, data4, data5, data6, data7, data8, data9 ]
 
 # CHANGE THIS to do something different with the result
 #print ("result: '%s' with %d%% confidence" % (label, confidence))
-
+'''
 
 
 
@@ -88,22 +89,22 @@ training_label = "top_right"
 #trainModel(API_KEY)
 import random
 def menu():
-    print "Menu"
-    print "1. Play game"
-    print "2. History of games"
-    print "3. Exit"
-    pos = raw_input("Choose option:")
+    print ("Menu")
+    print ("1. Jugar")
+    print ("2. Entrenar")
+    print ("3. Sortir")
+    pos =input("Tria opció:")
     while not(int(pos)>=1 and int(pos)<=3):
-        print "Opcio incorrecta"
-        pos = raw_input("Choose option:")
+        print ("Opció incorrecta")
+        pos = input("Tria opció:")
     return pos
     
 
 def drawBoard(l,n):
     if len(l)!=9:
-        print ("Error! Board badly designed!")
+        print ("Error! Panell mal fet!")
     else:
-        print ("Turn number:",n)
+        print ("Torn número:",n)
         print ("============")
         print ("   "+"|"+"   "+"|"+"   ")
         print (" " + l[6] + " " + "|" +" " + l[7] + " " +  "|" +" " + l[8] + " ")
@@ -150,7 +151,7 @@ def fullBoard(l):
       return False
   return True     
 def applyPlay(jug,l,lletra,n):
-    print (jug,"ocupies position",n)
+    print (jug,"ocupa la posició",n)
     l[n]=lletra
     return l
 
@@ -243,7 +244,7 @@ def randomPlay(l,player):
           r=random.randint(0,len(l)-1)
           while l[r]!=" ":
             r=random.randint(0,len(l)-1)
-          print("Random position")
+          print("Posició Random")
           return r
         else:
           return data_rec(label)
@@ -260,10 +261,10 @@ def play(l):
 
 
 def chooseLetterPlayer():
-    u=input("Choose between X or O: ")
+    u=input("Tria entre la X o la O: ")
     while u not in "XO":
-        print ("We are sorry. This letter is not valid.")
-        u=input("Choose between X or O: ")
+        print ("Ho sento. La lletra entrada no és vàlida.")
+        u=input("Tria entre la X o la O: ")
     p="X"
     if p not in u:
         p="X"
@@ -274,10 +275,10 @@ def chooseLetterPlayer():
     return a
 
 def playAgain():
-    u=input("Do you want to play another game? (y / n)")
+    u=input("Vols jugar una altra vegada? (y / n)")
     while u not in "yn":
-        print ("We are sorry. This option is not valid.")
-        u=input("Do you want to play another game? (y / n)")
+        print ("Ho sento. La opció no és vàlida")
+        u=input("Vols jugar una altra vegada? (y / n)")
     if u in "y":
         return True
     else:
@@ -302,6 +303,9 @@ def game():
             Play=play(t)
             t=applyPlay(ip,t,cosa,Play)
             drawBoard(t,i)
+            if train:
+              print("Entrenem la màquina amb aquestes posicions: ")
+              storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
             if isAWonPlay(t,cosa):
                 print ("Felicitats, has guanyat. Entrenarem a la màquina amb els resultats")
                 storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
@@ -328,12 +332,13 @@ def game():
                 cosa=p[0]
                 i=i+1
     return result
-print "Este es el juego de 3 en raya"
+print ("Aquest és el joc del 3 en ratlla:")
 wg=0
 lg=0
 tg=0
 op = int(menu())
 while op!=3:
+  train= False
   if op==1:
     g=game()
     if g==1:
@@ -343,8 +348,9 @@ while op!=3:
     else:
       tg+=1
   elif op==2:
-    statistics(wg,lg,tg)
+    train= True
+    game()
   else:
-    print "Opcion incorrecta!"
+    print ("Opció incorrecta!")
   op = int(menu())
-print "Gracias por jugar"
+print ("Gràcies per jugar")
