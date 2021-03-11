@@ -5,8 +5,8 @@ import sys
 # checks that a custom API key has been provided
 def checkApiKey(key):
   if key == "CHANGE THIS TO YOUR PROJECT API KEY":
-    print ("You need to enter your secret project API key into this sample.")
-    print("Replace the string on line 6 with your key.")
+    print ("Has de posar la teva calu personal API")
+    print("Canvia la linia de codi 6 amb la teva APIkey.")
     sys.exit()
 
 
@@ -51,14 +51,14 @@ def checkModel(key):
     responseData = response.json()
 
     status = {
-      2 : "ready to use",
-      1 : "training is in progress",
-      0 : "problem"
+      2 : "Preparat",
+      1 : "L'entrenament està en procés",
+      0 : "Problema"
     }
 
     return { 
-      "status" : status[responseData["status"]], 
-      "msg" : responseData["msg"] 
+      "Estat" : status[responseData["status"]], 
+      "Missatge" : responseData["msg"] 
     }
   else:
     # if something went wrong, display the error
