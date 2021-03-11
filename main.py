@@ -3,7 +3,7 @@ from mlmodel import trainModel, checkModel
 
 
 
-API_KEY="083e6cb0-80ca-11eb-b28f-93779c5b66b44ee7e549-6df9-401c-9c2d-25e164b5c7d4"
+API_KEY="ee4d5760-8251-11eb-981b-63571a718c719092265f-02cb-4329-baab-7f7c1c0b0bd5"
 
 
 # -------------------------------------------------------
@@ -87,6 +87,8 @@ training_label = "top_right"
 
 # remove the comment on the next line to use this 
 #trainModel(API_KEY)
+
+
 import random
 def menu():
     print ("Menu")
@@ -238,7 +240,7 @@ def randomPlay(l,player):
           demo = classifyNumbers(API_KEY, test_data)
           label = demo["class_name"]
           print (label)
-          print (data_rec(label))
+          #print (data_rec(label))
           times +=1
         if times==3:
           r=random.randint(0,len(l)-1)
@@ -304,11 +306,12 @@ def game():
             t=applyPlay(ip,t,cosa,Play)
             drawBoard(t,i)
             if train:
-              print("Entrenem la màquina amb aquestes posicions: ")
+              print("Entrenem la màquina amb aquestes posicions: ",Play)
               storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
             if isAWonPlay(t,cosa):
                 print ("Felicitats, has guanyat. Entrenarem a la màquina amb els resultats")
                 storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
+                trainModel(API_KEY)
                 result=0
             elif fullBoard(t):
                 print ("wow has empatat, has jugat fatal! :>")
@@ -349,6 +352,7 @@ while op!=3:
       tg+=1
   elif op==2:
     train= True
+    print(status)
     game()
   else:
     print ("Opció incorrecta!")
