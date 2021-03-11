@@ -3,7 +3,7 @@ from mlmodel import trainModel, checkModel
 
 
 
-API_KEY="ee4d5760-8251-11eb-981b-63571a718c719092265f-02cb-4329-baab-7f7c1c0b0bd5"
+API_KEY="CHANGE THIS TO YOUR PROJECT API KEY"
 
 
 # -------------------------------------------------------
