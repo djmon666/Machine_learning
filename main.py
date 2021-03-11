@@ -87,6 +87,18 @@ training_label = "top_right"
 # remove the comment on the next line to use this 
 #trainModel(API_KEY)
 import random
+def menu():
+    print "Menu"
+    print "1. Play game"
+    print "2. History of games"
+    print "3. Exit"
+    pos = raw_input("Choose option:")
+    while not(int(pos)>=1 and int(pos)<=3):
+        print "Opcio incorrecta"
+        pos = raw_input("Choose option:")
+    return pos
+    
+
 def drawBoard(l,n):
     if len(l)!=9:
         print ("Error! Board badly designed!")
@@ -316,4 +328,23 @@ def game():
                 cosa=p[0]
                 i=i+1
     return result
-game()
+print "Este es el juego de 3 en raya"
+wg=0
+lg=0
+tg=0
+op = int(menu())
+while op!=3:
+  if op==1:
+    g=game()
+    if g==1:
+      wg+=1
+    elif g==2:
+      lg+=1
+    else:
+      tg+=1
+  elif op==2:
+    statistics(wg,lg,tg)
+  else:
+    print "Opcion incorrecta!"
+  op = int(menu())
+print "Gracias por jugar"
