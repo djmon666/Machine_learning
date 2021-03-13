@@ -3,7 +3,9 @@ from mlmodel import trainModel, checkModel
 
 
 
-API_KEY="CHANGE THIS TO YOUR PROJECT API KEY"
+
+
+API_KEY="23efcea0-842f-11eb-94af-bda5504cb1aacc63fa83-36ed-45bf-97b9-16bb85d27fea"
 
 
 # -------------------------------------------------------
@@ -94,9 +96,10 @@ def menu():
     print ("Menu")
     print ("1. Jugar")
     print ("2. Entrenar")
-    print ("3. Sortir")
+    print ("3. Estadístiques")
+    print ("4. Sortir")
     pos =input("Tria opció:")
-    while not(int(pos)>=1 and int(pos)<=3):
+    while not(int(pos)>=1 and int(pos)<=4):
         print ("Opció incorrecta")
         pos = input("Tria opció:")
     return pos
@@ -109,7 +112,7 @@ def drawBoard(l,n):
         print ("Torn número:",n)
         print ("============")
         print ("   "+"|"+"   "+"|"+"   ")
-        print (" " + l[6] + " " + "|" +" " + l[7] + " " +  "|" +" " + l[8] + " ")
+        print (" " + l[0] + " " + "|" +" " + l[1] + " " +  "|" +" " + l[2] + " ")
         print ("   "+"|"+"   "+"|"+"   ")
         print ("------------")
         print ("   "+"|"+"   "+"|"+"   ")
@@ -117,7 +120,7 @@ def drawBoard(l,n):
         print ("   "+"|"+"   "+"|"+"   ")
         print ("------------")
         print ("   "+"|"+"   "+"|"+"   ")
-        print (" " + l[0] + " " + "|" +" " + l[1] + " " +  "|" +" " + l[2] + " ")
+        print (" " + l[6] + " " + "|" +" " + l[7] + " " +  "|" +" " + l[8] + " ")
         print ("   "+"|"+"   "+"|"+"   ")
         print ("============")
    
@@ -153,6 +156,10 @@ def fullBoard(l):
       return False
   return True     
 def applyPlay(jug,l,lletra,n):
+    if jug == "Player":
+      jug = "Jugador"
+    else :
+      jug = "Màquina"
     print (jug,"ocupa la posició",n)
     l[n]=lletra
     return l
@@ -174,11 +181,11 @@ def data_form(l,player):
   return result
 def data_rec(s):
   if s == "top_left":
-    return 6
+    return 0
   elif s == "top_middle":
-    return 7
+    return 1
   elif s == "top_right":
-    return 8
+    return 2
   elif s == "middle_left":
     return 3
   elif s == "middle_middle":
@@ -186,19 +193,19 @@ def data_rec(s):
   elif s == "middle_right":
     return 5
   elif s == "bottom_left":
-    return 0
+    return 6
   elif s == "bottom_middle":
-    return 1
+    return 7
   elif s == "bottom_right":
-    return 2
+    return 8
   else:
     return "ERROR"
 def data_send(s):
-  if s == 6:
+  if s == 0:
     return "top_left"
-  elif s == 7:
+  elif s == 1:
     return "top_middle"
-  elif s == 8:
+  elif s == 2:
     return "top_right"
   elif s == 3:
     return "middle_left"
@@ -206,11 +213,11 @@ def data_send(s):
     return "middle_middle"
   elif s == 5:
     return "middle_right"
-  elif s == 0:
+  elif s == 6:
     return "bottom_left"
-  elif s == 1:
+  elif s == 7:
     return "bottom_middle"
-  elif s == 2:
+  elif s == 8:
     return "bottom_right"
   else:
     return "ERROR"
@@ -230,16 +237,16 @@ def randomPlay(l,player):
         return -1
     else:
         test_data= data_form(l,player)
-        print (test_data)
+        #print (test_data)
         demo = classifyNumbers(API_KEY, test_data)
         label = demo["class_name"]
         times=0
         while not isAFreeSpace(l,data_rec(label))and times<3:
           test_data= data_form(l,player)
-          print (test_data)
+          #print (test_data)
           demo = classifyNumbers(API_KEY, test_data)
           label = demo["class_name"]
-          print (label)
+          #print (label)
           #print (data_rec(label))
           times +=1
         if times==3:
@@ -255,16 +262,16 @@ def randomPlay(l,player):
         
         
 def play(l):
-    t=input("Choose position to play (0-8)")
+    t=input("Tria posició per jugar (0-8)")
     while t not in "012345678" or not isAFreeSpace(l,int(t)):
-        print ("We are sorry. This position is not valid.")
-        t=input("Choose position to play (0-8)")
+        print ("Ho sentim, aquesta posició no és vàlida.")
+        t=input("Tria posició per jugar (0-8)")
     return int(t)
 
 
 def chooseLetterPlayer():
     u=input("Tria entre la X o la O: ")
-    while u not in "XO":
+    while u not in "XO" or len(u)!=1 :
         print ("Ho sento. La lletra entrada no és vàlida.")
         u=input("Tria entre la X o la O: ")
     p="X"
@@ -288,9 +295,17 @@ def playAgain():
     
 def startBoard():
     return [" "," "," "," "," "," "," "," "," "]
+def statistics(wg, lg, tg):
+    suma=wg+lg+tg
+    print ("Estadístiques:")
+    print ("- Nombre de jocs jugats:",suma)
+    print ("- Nombre de jocs guanyats:",wg)
+    print ("- Nombre de jocs perduts:",lg)
+    print ("- Nombre de jocs empatats:",tg)
     
-    
+   
 def game():
+    
     t=startBoard()
     p=chooseLetterPlayer()
     ip=chooseInitialPlayer()
@@ -302,20 +317,23 @@ def game():
     drawBoard(t,i)
     while not isAWonPlay(t,cosa) and not fullBoard(t):
         if ip=="Player":
+            panell=[] 
+            panell=t.copy()
+            #print ( "Aquest és l'enviament:",panell)
             Play=play(t)
             t=applyPlay(ip,t,cosa,Play)
             drawBoard(t,i)
             if train:
-              print("Entrenem la màquina amb aquestes posicions: ",Play)
-              storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
+              print("Entrenem la màquina amb aquestes posicions: ",panell)
+              storeNumbers(API_KEY, data_form(panell,p),data_send(Play) )
             if isAWonPlay(t,cosa):
                 print ("Felicitats, has guanyat. Entrenarem a la màquina amb els resultats")
-                storeNumbers(API_KEY, data_form(t,p),data_send(Play) )
+                storeNumbers(API_KEY, data_form(panell,p),data_send(Play) )
                 trainModel(API_KEY)
-                result=0
+                result=1
             elif fullBoard(t):
                 print ("wow has empatat, has jugat fatal! :>")
-                result=1
+                result=0
             else:
                 ip="Computer"
                 cosa=p[1]
@@ -329,7 +347,7 @@ def game():
                 result=2
             elif fullBoard(t):
                 print ("wow has empatat, has jugat fatal! Impresionant! :>")
-                result=1
+                result=0
             else:
                 ip="Player"
                 cosa=p[0]
@@ -337,10 +355,13 @@ def game():
     return result
 print ("Aquest és el joc del 3 en ratlla:")
 wg=0
+
 lg=0
+
 tg=0
+
 op = int(menu())
-while op!=3:
+while op!=4:
   train= False
   if op==1:
     g=game()
@@ -353,7 +374,15 @@ while op!=3:
   elif op==2:
     train= True
     print(status)
-    game()
+    g=game()
+    if g==1:
+      wg+=1
+    elif g==2:
+      lg+=1
+    else:
+      tg+=1
+  elif op==3:
+    statistics(wg,lg,tg)
   else:
     print ("Opció incorrecta!")
   op = int(menu())
