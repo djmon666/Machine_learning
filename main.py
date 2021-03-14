@@ -5,7 +5,7 @@ from mlmodel import trainModel, checkModel
 
 
 
-API_KEY="23efcea0-842f-11eb-94af-bda5504cb1aacc63fa83-36ed-45bf-97b9-16bb85d27fea"
+API_KEY="CHANGE THIS TO YOUR PROJECT API KEY"
 
 
 # -------------------------------------------------------
