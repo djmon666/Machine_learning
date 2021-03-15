@@ -346,7 +346,7 @@ def game():
                 print ("Sembla que la intel·ligència Artificial t'ha guanyat.")
                 result=2
             elif fullBoard(t):
-                print ("wow has empatat, has jugat fatal! Impresionant! :>")
+                print ("wow has empatat, has jugat fatal!")
                 result=0
             else:
                 ip="Player"
