@@ -110,9 +110,10 @@ def menu():
     print ("1. Jugar")
     print ("2. Entrenar")
     print ("3. Estadístiques")
-    print ("4. Sortir")
+    print ("4. Reiniciar estadístiques")
+    print ("5. Sortir")
     pos =input("Tria opció:")
-    while not(int(pos)>=1 and int(pos)<=4):
+    while not(int(pos)>=1 and int(pos)<=5):
         print ("Opció incorrecta")
         pos = input("Tria opció:")
     return pos
@@ -374,7 +375,7 @@ print ("Aquest és el joc del 3 en ratlla:")
 #tg=0
 
 op = int(menu())
-while op!=4:
+while op!=5:
   train= False
   if op==1:
     g=game()
@@ -402,6 +403,13 @@ while op!=4:
       db["tg"]=tg
   elif op==3:
     statistics(wg,lg,tg)
+  elif op==4:
+    wg=0
+    lg=0
+    tg=0
+    db["wg"]=0
+    db["lg"]=0
+    db["tg"]=0
   else:
     print ("Opció incorrecta!")
   op = int(menu())
