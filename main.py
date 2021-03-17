@@ -1,11 +1,24 @@
 from mlnumbers import classifyNumbers, storeNumbers
 from mlmodel import trainModel, checkModel
+from replit import db
+keys = db.keys()
+if len(keys)==0:
+  db["wg"] = "0"
+  db["lg"] = "0"
+  db["tg"] = "0"
+  wg=0
+  lg=0
+  tg=0
+else:
+  wg=int(db["wg"])
+  lg=int(db["lg"])
+  tg=int(db["tg"])
 
 
 
 
 
-API_KEY="CHANGE THIS TO YOUR PROJECT API KEY"
+API_KEY="23c81300-86fb-11eb-a3ea-45b2cd3f6c5bbe30fba8-ee77-4e50-83c8-aa319ac16378"
 
 
 # -------------------------------------------------------
@@ -354,11 +367,11 @@ def game():
                 i=i+1
     return result
 print ("Aquest és el joc del 3 en ratlla:")
-wg=0
+#wg=0
 
-lg=0
+#lg=0
 
-tg=0
+#tg=0
 
 op = int(menu())
 while op!=4:
@@ -367,20 +380,26 @@ while op!=4:
     g=game()
     if g==1:
       wg+=1
+      db["wg"]=wg
     elif g==2:
       lg+=1
+      db["lg"]=lg
     else:
       tg+=1
+      db["tg"]=tg
   elif op==2:
     train= True
     print(status)
     g=game()
     if g==1:
       wg+=1
+      db["wg"]=wg
     elif g==2:
       lg+=1
+      db["lg"]=lg
     else:
       tg+=1
+      db["tg"]=tg
   elif op==3:
     statistics(wg,lg,tg)
   else:
