@@ -14,7 +14,7 @@ else:
     lg = int(db["lg"])
     tg = int(db["tg"])
 
-API_KEY = "23c81300-86fb-11eb-a3ea-45b2cd3f6c5bbe30fba8-ee77-4e50-83c8-aa319ac16378"
+API_KEY = "CHANGE THIS TO YOUR PROJECT API KEY"
 
 # -------------------------------------------------------
 # CHECK IF THE MACHINE LEARNING MODEL IS READY TO USE
